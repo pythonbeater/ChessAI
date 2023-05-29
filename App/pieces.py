@@ -20,7 +20,8 @@ class Pieces:
         self.img_rect = img_rect
 
     def set_img(self, size=80):
-        self.img_url = os.path.join(r'./Assets/Images/Pieces_{}px/{}_{}.png'.format(size, self.color, self.name.strip()))
+        current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.img_url = os.path.join(current_dir, 'Assets', 'Images', 'Pieces_{}px'.format(size), '{}_{}.png'.format(self.color, self.name.strip()))
 
     def add_valid_moves(self, move): 
         self.valid_moves.append(move)
