@@ -5,11 +5,11 @@ Responsible for all rendering methods
 import pygame 
 from board import Board
 from move_piece import Move
-from utils import WIDTH, HEIGHT, B_DIMENSION, SQ_SIZE
+from utils import B_DIMENSION, SQ_SIZE
 
 class Game: 
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.board = Board()
         self.move = Move()
 
@@ -45,3 +45,17 @@ class Game:
                         img_centered = col * SQ_SIZE + SQ_SIZE // 2, row * SQ_SIZE + SQ_SIZE // 2
                         piece.img_rect = img.get_rect(center=img_centered) # center image
                         surface.blit(img, piece.img_rect) # rendering pixel data to board
+
+    def display_valid_moves(self, surface): 
+        # piece is grabbed
+        if self.move.move_piece: 
+            piece = self.move.piece
+
+            # loop valid moves
+            for move in piece.valid_moves: 
+                # color
+                color = '#C86464' if (move.final.row + move.final.col) % 2 == 0 else '#C84646'
+                # square rect
+                rect = (move.final.col * SQ_SIZE, move.final.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
+                # blit
+                pygame.draw.rect(surface, color, rect)

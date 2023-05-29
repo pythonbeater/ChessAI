@@ -9,7 +9,7 @@ from utils import WIDTH, HEIGHT, B_DIMENSION, SQ_SIZE, MAX_FPS
 
 class App:
 
-    def __init__(self):
+    def __init__(self) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT)) # setting window dimensions
         pygame.display.set_caption('ChessAI') # window name
@@ -28,6 +28,7 @@ class App:
 
         while True:
             game.display_bg(screen) # always display background
+            game.display_valid_moves(screen)
             game.display_pieces(screen)
 
             if move.moving: 
@@ -47,18 +48,28 @@ class App:
                     
                     # if clicked square has piece
                     if board.squares[clicked_col][clicked_row].square_state():
+                        
                         piece = board.squares[clicked_col][clicked_row].piece
+
+                        # check available moves
+                        board.check_moves(piece, clicked_col, clicked_row)
+
                         # save initial position to return if invalid move
                         move.save_init(event.pos)
 
                         # save piece representation
                         move.move_piece(piece)
 
+                        game.display_bg(screen)
+                        game.display_valid_moves(screen)
+                        game.display_pieces(screen)
+                        
                 # mouse motion event
                 elif event.type == pygame.MOUSEMOTION: 
                     if move.moving:
                         move.update_coor(event.pos)
                         game.display_bg(screen)
+                        game.display_valid_moves(screen)
                         game.display_pieces(screen)
                         move.update_blit(screen)
             

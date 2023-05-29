@@ -7,7 +7,7 @@ from utils import SQ_SIZE
 
 class Move: 
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.piece = None
         self.moving = False
         self.x, self.y = 0, 0
@@ -39,3 +39,10 @@ class Move:
     def drop_move(self):
         self.piece = None
         self.moving = False
+
+class Place: 
+
+    def __init__(self, initial, final) -> None:
+        # initial and target square
+        self.initial = initial
+        self.final = final
