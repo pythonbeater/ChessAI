@@ -26,6 +26,9 @@ class Pieces:
     def add_valid_moves(self, move): 
         self.valid_moves.append(move)
 
+    def clear_moves(self): 
+        self.valid_moves = []
+
 ######### CHILD CLASSES #########
 
 class Pawn(Pieces): 

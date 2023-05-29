@@ -4,6 +4,8 @@ This is the main driver file. Responsible for running the App
 
 import sys
 import pygame
+from square import Square
+from move_piece import Place
 from game_engine import Game
 from utils import WIDTH, HEIGHT, B_DIMENSION, SQ_SIZE, MAX_FPS
 
@@ -74,7 +76,25 @@ class App:
                         move.update_blit(screen)
             
                 # release click event
-                elif event.type == pygame.MOUSEBUTTONUP: 
+                elif event.type == pygame.MOUSEBUTTONUP:
+                                        
+                    if move.moving:
+                        move.update_coor(event.pos)
+
+                        released_col = move.x // SQ_SIZE
+                        released_row = move.y // SQ_SIZE
+
+                        # create valid move
+                        initial = Square(move.init_col, move.init_row)
+                        final = Square(released_col, released_row)
+                        place = Place(initial, final)
+
+                        if board.valid_move(move.piece, place):
+                            board.move(move.piece, place)
+
+                            game.display_bg(screen)
+                            game.display_pieces(screen)
+                    
                     move.drop_move()
 
                 ######################

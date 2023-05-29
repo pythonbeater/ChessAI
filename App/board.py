@@ -13,11 +13,31 @@ class Board:
     def __init__(self) -> None:
         # board 2d array
         self.squares = [[0]*B_DIMENSION for col in range(B_DIMENSION)]
-
+        self.last_move = None
         self._create()
         self._add_pieces('white')
         self._add_pieces('black')
 
+    def move(self, piece, move): 
+        initial = move.initial
+        final = move.final
+
+        # update console
+        # initial position will be empty
+        self.squares[initial.col][initial.row] = None
+        # final will hace 
+        self.squares[final.col][final.row] = piece
+
+        piece.moved = True
+
+        # clear valid moves 
+        piece.clear_moves()
+
+        # save last move
+        self.last_move = move
+
+    def valid_move(self, piece, move):
+        return move in piece.valid_moves
         
     def check_moves(self, piece, col, row): 
         '''

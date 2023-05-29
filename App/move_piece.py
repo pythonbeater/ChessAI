@@ -46,3 +46,15 @@ class Place:
         # initial and target square
         self.initial = initial
         self.final = final
+    
+    def __str__(self) -> str:
+        '''
+        Move message
+        '''
+        s = ''
+        s += f'({self.initial.col}, {self.inital.row})'
+        s += f' to ({self.final.col}, {self.final.row})'
+        return s
+
+    def __eq__(self, other: object) -> bool:
+        return self.initial == other.initial and self.final == other.final

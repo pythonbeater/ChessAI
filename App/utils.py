@@ -10,5 +10,5 @@ B_DIMENSION  = 8
 SQ_SIZE = WIDTH // B_DIMENSION 
 
 # Maximum frame rate
-MAX_FPS = 30
+MAX_FPS = 60
 

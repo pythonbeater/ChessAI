@@ -9,6 +9,9 @@ class Square:
         self.row = row
         self.piece = piece
 
+    def __eq__(self, other: object) -> bool:
+        return self.col == other.col and self.row == other.row
+
     def square_state(self, check_type='piece') -> bool:
         '''
         Check if square has piece
@@ -18,7 +21,7 @@ class Square:
         return self.piece != None
     
     def square_piece(self, color, p_type='enemy'): 
-        '''
+        ''' 
         Check if square has rival or team piece
         '''
         if p_type == 'teammate':
