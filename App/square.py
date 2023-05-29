@@ -1,5 +1,5 @@
 '''
-Responsible for getting squares' state
+Responsible for squares' accessibility, to get current state and update it
 '''
 
 class Square: 
@@ -8,3 +8,6 @@ class Square:
         self.col = col
         self.row = row
         self.piece = piece
+
+    def square_state(self) -> bool: 
+        return self.piece != None
