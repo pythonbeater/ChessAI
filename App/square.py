@@ -23,7 +23,7 @@ class Square:
         '''
         if p_type == 'teammate':
             return self.square_state() and self.piece.color == color
-        return self.square_state() and self.piece.color != color
+        return self.square_state(check_type='piece') and self.piece.color != color
 
     def empty_or_foe(self, color): 
         '''

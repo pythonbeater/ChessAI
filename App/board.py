@@ -28,12 +28,12 @@ class Board:
 
         def knight_moves():
             valid_moves = [
-                (col + 1, row - 2), #
-                (col - 1, row - 2), #
-                (col - 2, row - 1),
-                (col + 2, row - 1),
-                (col + 2, row + 1),
-                (col - 2, row + 1),
+                (col + 1, row - 2), 
+                (col - 1, row - 2), 
+                (col - 2, row - 1), 
+                (col + 2, row - 1), 
+                (col + 2, row + 1), 
+                (col - 2, row + 1), 
                 (col - 1, row + 2),
                 (col + 1, row + 2)
             ]
@@ -43,14 +43,14 @@ class Board:
 
                 if Square.in_board_range(valid_col, valid_row): 
                     # checking if the square of valid move is empty or has enemy piece
-                    if self.squares[valid_col][valid_row].square_piece(piece.color, p_type='enemy'): 
+                    if self.squares[valid_col][valid_row].empty_or_foe(piece.color): 
                         # squares of new move
                         initial = Square(col, row)
                         final = Square(valid_col, valid_row)
                         # new move
                         move = Place(initial, final)
                         # append new valid move
-                        piece.add_valid_moves()
+                        piece.add_valid_moves(move)
 
         # check piece instance
         if isinstance(piece, Pawn): 
