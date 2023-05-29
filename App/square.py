@@ -14,7 +14,7 @@ class Square:
         Check if square has piece
         '''
         if check_type == 'empty':
-            return self.piece == None
+            return not self.piece != None
         return self.piece != None
     
     def square_piece(self, color, p_type='enemy'): 

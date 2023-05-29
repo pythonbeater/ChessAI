@@ -28,7 +28,7 @@ class App:
 
         while True:
             game.display_bg(screen) # always display background
-            game.display_valid_moves(screen)
+            game.display_valid_moves(screen) #DIFF
             game.display_pieces(screen)
 
             if move.moving: 

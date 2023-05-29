@@ -48,7 +48,7 @@ class Game:
 
     def display_valid_moves(self, surface): 
         # piece is grabbed
-        if self.move.move_piece: 
+        if self.move.moving: 
             piece = self.move.piece
 
             # loop valid moves

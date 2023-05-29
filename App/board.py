@@ -46,7 +46,7 @@ class Board:
                     if self.squares[valid_col][valid_row].empty_or_foe(piece.color): 
                         # squares of new move
                         initial = Square(col, row)
-                        final = Square(valid_col, valid_row)
+                        final = Square(valid_col, valid_row) #piece=piece
                         # new move
                         move = Place(initial, final)
                         # append new valid move
