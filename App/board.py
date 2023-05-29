@@ -28,8 +28,8 @@ class Board:
 
         def knight_moves():
             valid_moves = [
-                (col + 1, row - 2),
-                (col - 1, row - 2),
+                (col + 1, row - 2), #
+                (col - 1, row - 2), #
                 (col - 2, row - 1),
                 (col + 2, row - 1),
                 (col + 2, row + 1),
