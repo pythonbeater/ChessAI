@@ -11,6 +11,7 @@ class Game:
 
     def __init__(self) -> None:
         self.player_order = 'white'
+        self.hovered_square = None
         self.board = Board()
         self.move = Move()
 
@@ -61,18 +62,30 @@ class Game:
                 # blit
                 pygame.draw.rect(surface, color, rect)
     
-    def show_last_move(self, surface):
+    def display_last_move(self, surface):
         if self.board.last_move:
             initial = self.board.last_move.initial
             final = self.board.last_move.final
                 
             for position in [initial, final]:
                 # color
-                color = (244, 247, 116) if (position.final.row + position.final.col) % 2 == 0 else (172, 195, 51)
+                color = (244, 247, 116) if (position.row + position.col) % 2 == 0 else (172, 195, 51)
                 # square rect
-                rect = (position.final.col * SQ_SIZE, position.final.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
+                rect = (position.col * SQ_SIZE, position.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
                 # blit
                 pygame.draw.rect(surface, color, rect)
                 
+    def display_hover(self, surface):
+        if self.hovered_square:
+            # color
+            color = (180, 180, 180)
+            # square rect
+            rect = (self.hovered_square.col * SQ_SIZE, self.hovered_square.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
+            # blit
+            pygame.draw.rect(surface, color, rect, width= 3)
+                
     def next_turn(self):
         self.player_order = 'white' if self.player_order == 'black' else 'black'
+        
+    def set_hover(self, col, row):
+        self.hovered_square = self.board.squares[col][row]

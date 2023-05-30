@@ -10,8 +10,10 @@ class Move:
     def __init__(self) -> None:
         self.piece = None
         self.moving = False
-        self.x, self.y = 0, 0
-        self.init_row, self.init_col  = 0, 0
+        self.x = 0
+        self.y = 0
+        self.initial_row = 0
+        self.initial_col = 0
 
     def update_blit(self, surface): 
         # piece icon increases size

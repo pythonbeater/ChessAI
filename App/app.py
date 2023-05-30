@@ -30,10 +30,10 @@ class App:
 
         while True:
             game.display_bg(screen) # always display background
-            game.show_last_move(screen)
+            game.display_last_move(screen)
             game.display_valid_moves(screen) #DIFF
             game.display_pieces(screen)
-
+            game.display_hover(screen)
             if move.moving: 
                 move.update_blit(screen)
 
@@ -63,21 +63,29 @@ class App:
                             # save piece representation
                             move.move_piece(piece)
                             game.display_bg(screen)
+                            game.display_last_move(screen)
                             game.display_valid_moves(screen)
                             game.display_pieces(screen)
-                        
+
                 # mouse motion event
-                elif event.type == pygame.MOUSEMOTION: 
+                elif event.type == pygame.MOUSEMOTION:
+                    mot_row = event.pos[1] // SQ_SIZE
+                    mot_col = event.pos[0] // SQ_SIZE
+                    
+                    game.set_hover(mot_col, mot_row)
+                    
                     if move.moving:
                         move.update_coor(event.pos)
                         game.display_bg(screen)
+                        game.display_last_move(screen)
                         game.display_valid_moves(screen)
                         game.display_pieces(screen)
+                        game.display_hover(screen)
                         move.update_blit(screen)
             
                 # release click event
                 elif event.type == pygame.MOUSEBUTTONUP:
-                                        
+                    
                     if move.moving:
                         move.update_coor(event.pos)
 
@@ -85,17 +93,15 @@ class App:
                         released_row = move.y // SQ_SIZE
 
                         # create valid move
-                        initial = Square(move.init_col, move.init_row)
+                        initial = Square(move.initial_col, move.initial_row)
                         final = Square(released_col, released_row)
                         place = Place(initial, final)
 
                         if board.valid_move(move.piece, place):
                             board.move(move.piece, place)
-
                             game.display_bg(screen)
-                            game.show_last_move(screen)
+                            game.display_last_move(screen)
                             game.display_pieces(screen)
-                            
                             # next turn
                             game.next_turn()
                     
