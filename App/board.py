@@ -28,6 +28,7 @@ class Board:
         # final will hace 
         self.squares[final.col][final.row].piece = piece
 
+        
         piece.moved = True
 
         # clear valid moves 
@@ -38,7 +39,7 @@ class Board:
 
     def valid_move(self, piece, move):
         return move in piece.valid_moves
-        
+
     def check_moves(self, piece, col, row): 
         '''
         Calculate all valid moves of a specific agent (piece) in a

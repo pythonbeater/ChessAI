@@ -116,6 +116,16 @@ class App:
                 elif event.type == pygame.ACTIVEEVENT:
                     clock.tick(MAX_FPS // 2)
                     
+                # Keys Function
+                elif event.type == pygame.KEYDOWN:
+                    
+                    # Restart game
+                    if event.key == pygame.K_r: # Key R
+                        game.restart()
+                        game = self.game
+                        board = self.game.board
+                        move = self.game.move
+                                    
                 # close app event
                 elif event.type == pygame.QUIT:
                     pygame.quit()
