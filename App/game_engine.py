@@ -10,6 +10,7 @@ from utils import B_DIMENSION, SQ_SIZE
 class Game: 
 
     def __init__(self) -> None:
+        self.player_order = 'white'
         self.board = Board()
         self.move = Move()
 
@@ -59,3 +60,19 @@ class Game:
                 rect = (move.final.col * SQ_SIZE, move.final.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
                 # blit
                 pygame.draw.rect(surface, color, rect)
+    
+    def show_last_move(self, surface):
+        if self.board.last_move:
+            initial = self.board.last_move.initial
+            final = self.board.last_move.final
+                
+            for position in [initial, final]:
+                # color
+                color = (244, 247, 116) if (position.final.row + position.final.col) % 2 == 0 else (172, 195, 51)
+                # square rect
+                rect = (position.final.col * SQ_SIZE, position.final.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
+                # blit
+                pygame.draw.rect(surface, color, rect)
+                
+    def next_turn(self):
+        self.player_order = 'white' if self.player_order == 'black' else 'black'

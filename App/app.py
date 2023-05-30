@@ -24,12 +24,13 @@ class App:
         screen = self.screen
         clock = self.clock
         game = self.game
-        board = game.board
-        move = game.move
+        board = self.game.board
+        move = self.game.move
 
 
         while True:
             game.display_bg(screen) # always display background
+            game.show_last_move(screen)
             game.display_valid_moves(screen) #DIFF
             game.display_pieces(screen)
 
@@ -40,6 +41,7 @@ class App:
 
             for event in pygame.event.get():
                 ### moving pieces ###
+                
                 # click event
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     move.update_coor(event.pos)
@@ -49,22 +51,20 @@ class App:
                     clicked_col = move.x // SQ_SIZE
                     
                     # if clicked square has piece
-                    if board.squares[clicked_col][clicked_row].square_state():
-                        
+                    if board.squares[clicked_col][clicked_row].square_state(check_type='piece'):
+                        # check if has a piece
                         piece = board.squares[clicked_col][clicked_row].piece
-
-                        # check available moves
-                        board.check_moves(piece, clicked_col, clicked_row)
-
-                        # save initial position to return if invalid move
-                        move.save_init(event.pos)
-
-                        # save piece representation
-                        move.move_piece(piece)
-
-                        game.display_bg(screen)
-                        game.display_valid_moves(screen)
-                        game.display_pieces(screen)
+                        # check valid piece color
+                        if piece.color == game.player_order:
+                            # check available moves
+                            board.check_moves(piece, clicked_col, clicked_row)
+                            # save initial position to return if invalid move
+                            move.save_init(event.pos)
+                            # save piece representation
+                            move.move_piece(piece)
+                            game.display_bg(screen)
+                            game.display_valid_moves(screen)
+                            game.display_pieces(screen)
                         
                 # mouse motion event
                 elif event.type == pygame.MOUSEMOTION: 
@@ -93,7 +93,11 @@ class App:
                             board.move(move.piece, place)
 
                             game.display_bg(screen)
+                            game.show_last_move(screen)
                             game.display_pieces(screen)
+                            
+                            # next turn
+                            game.next_turn()
                     
                     move.drop_move()
 

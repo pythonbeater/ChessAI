@@ -53,7 +53,7 @@ class Place:
         '''
         s = ''
         s += f'({self.initial.col}, {self.inital.row})'
-        s += f' to ({self.final.col}, {self.final.row})'
+        s += f' ->  ({self.final.col}, {self.final.row})'
         return s
 
     def __eq__(self, other: object) -> bool:

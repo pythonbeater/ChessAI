@@ -24,9 +24,9 @@ class Board:
 
         # update console
         # initial position will be empty
-        self.squares[initial.col][initial.row] = None
+        self.squares[initial.col][initial.row].piece = None
         # final will hace 
-        self.squares[final.col][final.row] = piece
+        self.squares[final.col][final.row].piece = piece
 
         piece.moved = True
 
