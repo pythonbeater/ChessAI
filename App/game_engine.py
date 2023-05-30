@@ -6,6 +6,7 @@ import pygame
 from board import Board
 from move_piece import Move
 from utils import B_DIMENSION, SQ_SIZE
+from config import Config
 
 class Game: 
 
@@ -14,6 +15,7 @@ class Game:
         self.hovered_square = None
         self.board = Board()
         self.move = Move()
+        self.config = Config()
 
     def display_bg(self, surface): 
         '''
@@ -31,7 +33,16 @@ class Game:
                 sq_rect = (col * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
 
                 pygame.draw.rect(surface, color, sq_rect)
-    
+                
+                '''
+                # Coordinates
+                if col == 0:
+                    label = self.config.font.render(str(B_DIMENSION - row), 1, color)
+                    label_position = (5, 5 + row * SQ_SIZE)
+                    
+                    surface.blit(label, label_position)
+                ''' 
+                    
     def display_pieces(self, surface): 
         for col in range(B_DIMENSION):
             for row in range(B_DIMENSION):

@@ -8,6 +8,8 @@ from square import Square
 from move_piece import Place
 from game_engine import Game
 from utils import WIDTH, HEIGHT, B_DIMENSION, SQ_SIZE, MAX_FPS
+from config import Config
+
 
 class App:
 
@@ -17,6 +19,7 @@ class App:
         pygame.display.set_caption('ChessAI') # window name
         self.game = Game()
         self.clock = pygame.time.Clock()
+        self.config = Config()
 
 
     def mainloop(self):
