@@ -3,7 +3,7 @@ This file will save constants for the game.
 '''
 
 # Screen dimensions
-WIDTH, HEIGHT = 664, 664
+WIDTH, HEIGHT = 800, 800
 
 # Board dimensions
 B_DIMENSION  = 8

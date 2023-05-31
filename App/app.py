@@ -4,11 +4,11 @@ This is the main driver file. Responsible for running the App
 
 import sys
 import pygame
+from config import Config
 from square import Square
 from move_piece import Place
 from game_engine import Game
-from utils import WIDTH, HEIGHT, B_DIMENSION, SQ_SIZE, MAX_FPS
-from config import Config
+from utils import WIDTH, HEIGHT, SQ_SIZE, MAX_FPS
 
 
 class App:
@@ -34,7 +34,7 @@ class App:
         while True:
             game.display_bg(screen) # always display background
             game.display_last_move(screen)
-            game.display_valid_moves(screen) #DIFF
+            game.display_valid_moves(screen)
             game.display_pieces(screen)
             game.display_hover(screen)
             if move.moving: 
@@ -91,7 +91,7 @@ class App:
                     
                     if move.moving:
                         move.update_coor(event.pos)
-
+                        board.en_passant_to_true(move.piece)
                         released_col = move.x // SQ_SIZE
                         released_row = move.y // SQ_SIZE
 
@@ -101,7 +101,9 @@ class App:
                         place = Place(initial, final)
 
                         if board.valid_move(move.piece, place):
+                            captured = board.squares[released_col][released_row].square_state(check_type='piece')
                             board.move(move.piece, place)
+                            game.sound_effect(captured)
                             game.display_bg(screen)
                             game.display_last_move(screen)
                             game.display_pieces(screen)

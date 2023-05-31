@@ -4,10 +4,13 @@ Responsible for squares' accessibility, to get current state and update it
 
 class Square: 
 
+    col_dict = {0:'a', 1:'b', 2:'c', 3:'d', 4:'e', 5:'f', 6:'g', 7:'h'}
+
     def __init__(self, col, row, piece=None) -> None:
         self.col = col
         self.row = row
         self.piece = piece
+        self.alpha = self.col_dict
 
     def __eq__(self, other: object) -> bool:
         return self.col == other.col and self.row == other.row
@@ -44,5 +47,10 @@ class Square:
             if arg < 0 or arg > 7: 
                 return False
         return True
-    
+
+    @staticmethod
+    def get_coor(col): 
+        col_dict = {0:'a', 1:'b', 2:'c', 3:'d', 4:'e', 5:'f', 6:'g', 7:'h'}
+        return col_dict[col]
+
 
