@@ -37,7 +37,9 @@ class Pawn(Pieces):
         super().__init__('pawn', color, 1.)
         # if its color is white it means it'll move upwards
         self.dir  = -1 if color == 'white' else 1 # in pygame the y axis decreaases going up
-
+        # En Passant
+        self.en_passant = False
+        
 class Knight(Pieces): 
 
     def __init__(self, color) -> None:
