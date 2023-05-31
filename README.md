@@ -30,4 +30,9 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 ## Game Images
 
 
+## To do!!
+1 - After check king king cant take peaces
+2 - Castling 
+
+
 
