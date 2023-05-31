@@ -315,7 +315,9 @@ class Board:
                             if not self.check(piece, move):
                                 # Append new move 
                                 piece.add_valid_moves(move)
-                            else: piece.add_valid_moves(move)
+                            else: 
+                                if not self.check(piece, move):
+                                    break
                         else:
                             # Append new move 
                             piece.add_valid_moves(move)
@@ -360,7 +362,7 @@ class Board:
                                     piece.add_valid_moves(move_king)
             
                 # King side castle
-                right_rook = self.squares[0][row].piece
+                right_rook = self.squares[7][row].piece
                 if isinstance(right_rook, Rook):
                     if not right_rook.moved:
                         for c in range(5, 7):
@@ -383,7 +385,7 @@ class Board:
                                 
                                 #check 
                                 if Confirmation:
-                                    if not self.check(piece, move_king) and not self.check(left_rook, move_rook):
+                                    if not self.check(piece, move_king) and not self.check(right_rook, move_rook):
                                         # Append new move rook
                                         right_rook.add_valid_moves(move_rook)
                                         # Append new move king 
