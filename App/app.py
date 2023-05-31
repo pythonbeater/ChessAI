@@ -55,12 +55,12 @@ class App:
                     
                     # if clicked square has piece
                     if board.squares[clicked_col][clicked_row].square_state(check_type='piece'):
-                        # check if has a piece
+                        # check- if has a piece
                         piece = board.squares[clicked_col][clicked_row].piece
                         # check valid piece color
                         if piece.color == game.player_order:
                             # check available moves
-                            board.check_moves(piece, clicked_col, clicked_row)
+                            board.check_moves(piece, clicked_col, clicked_row, Confirmation=True)
                             # save initial position to return if invalid move
                             move.save_init(event.pos)
                             # save piece representation

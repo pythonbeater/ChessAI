@@ -7,6 +7,7 @@ from square import Square
 from move_piece import Place
 from utils import B_DIMENSION
 from pieces import Pieces, Pawn, Knight, Bishop, Rook, Queen, King
+import copy
 
 class Board: 
 
@@ -27,8 +28,15 @@ class Board:
         self.squares[initial.col][initial.row].piece = None
         # final will hace 
         self.squares[final.col][final.row].piece = piece
-
         
+        # castling
+        if isinstance(piece, King):
+            if self.castling(initial, final):
+                difference = final.col - initial.col
+                rook = piece.left_rook if (difference < 0) else piece.right_rook
+                self.move(rook, rook.valid_moves[-1])
+                
+        # Movement        
         piece.moved = True
 
         # clear valid moves 
@@ -40,7 +48,30 @@ class Board:
     def valid_move(self, piece, move):
         return move in piece.valid_moves
 
-    def check_moves(self, piece, col, row): 
+    def castling(self, initial, final):
+        return abs(initial.col - final.col) == 2
+
+    def check(self, piece, move):
+        temporary_piece = copy.deepcopy(piece)
+        temporary_board = copy.deepcopy(self)
+        # move piece
+        temporary_board.move(temporary_piece, move)
+
+        # Check the check
+        for row in range(B_DIMENSION):
+            for col in range(B_DIMENSION):
+                if temporary_board.squares[col][row].square_piece(piece.color, p_type='enemy'):
+                    p = temporary_board.squares[col][row].piece
+                    # Bool = False is the condition to dont run Check Moves = Not eat the king
+                    temporary_board.check_moves(p, col, row, Confirmation=False)
+                    for m in p.valid_moves:
+                        # if the final place has a King is a check
+                        if isinstance(m.final.piece, King):
+                            return True
+        
+        return False
+
+    def check_moves(self, piece, col, row, Confirmation=True): 
         '''
         Calculate all valid moves of a specific agent (piece) in a
         specific state (board position) given a specific environment 
@@ -62,8 +93,15 @@ class Board:
                         final_position = Square(col, move_row)
                         # Create a new move
                         move = Place(initial_position, final_position)
-                        # Append new move 
-                        piece.add_valid_moves(move)
+                        
+                        #check 
+                        if Confirmation:
+                            if not self.check(piece, move):
+                                # Append new move 
+                                piece.add_valid_moves(move)
+                        else:
+                            # Append new move 
+                            piece.add_valid_moves(move)
                     # When move is blocked
                     else:
                         break
@@ -80,11 +118,18 @@ class Board:
                     if self.squares[move_col][move_row].square_piece(piece.color, p_type='enemy'):
                         # Create intial and final move
                         initial_position = Square(col, row)
-                        final_position = Square(move_col, move_row)
+                        check_piece = self.squares[move_col][move_row].piece
+                        final_position = Square(move_col, move_row, check_piece)
                         # Create a new move
                         move = Place(initial_position, final_position)
-                        # Append new move 
-                        piece.add_valid_moves(move)
+                        #check 
+                        if Confirmation:
+                            if not self.check(piece, move):
+                                # Append new move 
+                                piece.add_valid_moves(move)
+                        else:
+                            # Append new move 
+                            piece.add_valid_moves(move)
             
         def knight_moves():
             valid_moves = [
@@ -98,19 +143,27 @@ class Board:
                 (col + 1, row + 2)
             ]
 
-            for valid in valid_moves: 
-                valid_col, valid_row = valid
+            for move in valid_moves: 
+                move_col, move_row = move
 
-                if Square.in_board_range(valid_col, valid_row): 
+                if Square.in_board_range(move_col, move_row): 
                     # checking if the square of valid move is empty or has enemy piece
-                    if self.squares[valid_col][valid_row].empty_or_foe(piece.color): 
+                    if self.squares[move_col][move_row].empty_or_foe(piece.color): 
                         # squares of new move
                         initial = Square(col, row)
-                        final = Square(valid_col, valid_row) #piece=piece
+                        check_piece = self.squares[move_col][move_row].piece
+                        final = Square(move_col, move_row, check_piece) #piece=piece
                         # new move
                         move = Place(initial, final)
-                        # append new valid move
-                        piece.add_valid_moves(move)
+                        #check 
+                        if Confirmation:
+                            if not self.check(piece, move):
+                                # Append new move 
+                                piece.add_valid_moves(move)
+                            else: break # if the knight is in check
+                        else:
+                            # Append new move 
+                            piece.add_valid_moves(move)
 
         def straight_moves(incrs):
             '''
@@ -125,23 +178,36 @@ class Board:
                     if Square.in_board_range(move_col, move_row):
                         # Create intial and final move
                         initial_position = Square(col, row)
-                        final_position = Square(move_col, move_row)
+                        check_piece = self.squares[move_col][move_row].piece
+                        final_position = Square(move_col, move_row, check_piece)
                         # Create a new move
                         move = Place(initial_position, final_position)
                         # Append new move 
                         
                         # empty
                         if self.squares[move_col][move_row].square_state(check_type = 'empty'):
-                            # Append new move
-                            piece.add_valid_moves(move)
+                            #check 
+                            if Confirmation:
+                                if not self.check(piece, move):
+                                    # Append new move 
+                                    piece.add_valid_moves(move)
+                            else:
+                                # Append new move 
+                                piece.add_valid_moves(move)
                         # has enemy piece
-                        if self.squares[move_col][move_row].square_piece(piece.color, p_type='enemy'):
-                            # Append new move
-                            piece.add_valid_moves(move)
+                        elif self.squares[move_col][move_row].square_piece(piece.color, p_type='enemy'):
+                            #check 
+                            if Confirmation:
+                                if not self.check(piece, move):
+                                    # Append new move 
+                                    piece.add_valid_moves(move)
+                            else:
+                                # Append new move 
+                                piece.add_valid_moves(move)
                             break
                         
                         # has team piece
-                        if self.squares[move_col][move_row].square_piece(piece.color, p_type='teammate'):
+                        elif self.squares[move_col][move_row].square_piece(piece.color, p_type='teammate'):
                             break
                         
                         
@@ -176,14 +242,90 @@ class Board:
                         final = Square(move_col, move_row) #piece=piece
                         # new move
                         move = Place(initial, final)
-                        # append new valid move
-                        piece.add_valid_moves(move)
+                        #check 
+                        if Confirmation:
+                            if not self.check(piece, move):
+                                # Append new move 
+                                piece.add_valid_moves(move)
+                            else: piece.add_valid_moves(move)
+                        else:
+                            # Append new move 
+                            piece.add_valid_moves(move)
+                        
         
-            # Castle
+            # Castling
+            if not piece.moved:
+                
+                # Queen castling
+                left_rook = self.squares[0][row].piece
+                if isinstance(left_rook, Rook):
+                    if not left_rook.moved:
+                        for c in range(1, 4):
+                            # Check if any piece is between 
+                            if self.squares[c][row].square_state(check_type='piece'):
+                                break
+                            
+                            if c == 3:
+                                piece.left_rook = left_rook 
+                                
+                                # Rook Movemento
+                                initial = Square(0, row)
+                                final = Square(3, row)
+                                move_rook = Place(initial, final)
+                                
+                                # king movement
+                                initial = Square(col, row)
+                                final = Square(2, row)
+                                move_king = Place(initial, final)
             
-            # Queen side castle
+                                #check 
+                                if Confirmation:
+                                    if not self.check(piece, move_king) and not self.check(left_rook, move_rook):
+                                        # Append new move rook
+                                        left_rook.add_valid_moves(move_rook)
+                                        # Append new move king 
+                                        piece.add_valid_moves(move_king)
+                                else:
+                                    # Append new move rook
+                                    left_rook.add_valid_moves(move_rook)
+                                    # Append new move king
+                                    piece.add_valid_moves(move_king)
             
-            # King side castle
+                # King side castle
+                right_rook = self.squares[0][row].piece
+                if isinstance(right_rook, Rook):
+                    if not right_rook.moved:
+                        for c in range(5, 7):
+                            # Check if any piece is between 
+                            if self.squares[c][row].square_state(check_type='piece'):
+                                break
+                                
+                            if c == 6:
+                                piece.right_rook = right_rook 
+                                    
+                                # Rook Movemento
+                                initial = Square(7, row)
+                                final = Square(5, row)
+                                move_rook = Place(initial, final)
+                                    
+                                # king movement
+                                initial = Square(col, row)
+                                final = Square(6, row)
+                                move_king = Place(initial, final)
+                                
+                                #check 
+                                if Confirmation:
+                                    if not self.check(piece, move_king) and not self.check(left_rook, move_rook):
+                                        # Append new move rook
+                                        right_rook.add_valid_moves(move_rook)
+                                        # Append new move king 
+                                        piece.add_valid_moves(move_king)
+                                else:
+                                    # Append new move rook
+                                    right_rook.add_valid_moves(move_rook)
+                                    # Append new move king
+                                    piece.add_valid_moves(move_king)
+                                
         
         # check piece instance
         if isinstance(piece, Pawn): 
