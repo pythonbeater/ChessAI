@@ -318,6 +318,7 @@ class Board:
                             else: 
                                 if not self.check(piece, move):
                                     break
+                                else:piece.add_valid_moves(move) ## AQUI
                         else:
                             # Append new move 
                             piece.add_valid_moves(move)
@@ -342,7 +343,6 @@ class Board:
                                 initial = Square(0, row)
                                 final = Square(3, row)
                                 move_rook = Place(initial, final)
-                                
                                 # king movement
                                 initial = Square(col, row)
                                 final = Square(2, row)

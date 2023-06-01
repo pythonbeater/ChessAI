@@ -27,12 +27,15 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 
 * Press 'r' to restart the game
 
+* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to select him
+
+
 ## Game Images
 
 
 ## To do!!
-1 - After check king king cant take peaces
-2 - Castling 
+1 - Castling 
 
+2 - Menu is implemented but has a bug, first round opens a window of menu withouhg interations if QUIT open a second rounf and works perfectly 
 
 
