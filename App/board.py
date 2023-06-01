@@ -321,7 +321,7 @@ class Board:
                             else: 
                                 if not self.check(piece, move):
                                     break
-                                else:piece.add_valid_moves(move) ## AQUI
+                                else:piece.add_valid_moves(move)
                         else:
                             # Append new move 
                             piece.add_valid_moves(move)
