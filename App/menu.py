@@ -10,14 +10,14 @@ class Menu:
 
         # Create the game window
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption('Agent Selection')
+        pygame.display.set_caption('ChessAI')
         
         # Define Fonts
         font_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Assets', 'Font', '8bit_wonder','8-BIT WONDER.TTF')
         self.font_name = font_path
         
         # backgroung image
-        background_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Assets', 'Images', 'Menu Background','back2.jpg')
+        background_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Assets', 'Images', 'Menu Background','chess-icon-set.jpg')
         self.background = pygame.image.load(background_path).convert()
         
         # Define colors
@@ -46,18 +46,21 @@ class Menu:
             self.screen.blit(text_surface, text_rect)
     
     def draw_menu(self):
-        # Background color
-        self.screen.blit(self.background, (0, 0))
         
-        self.draw_text('Choose an Agent',50, WIDTH//2 , 100)
+        # Background color
+        background_scaled = pygame.transform.scale(self.background, (800, 600))
+        self.screen.blit(background_scaled, (0, 100))
+        
+        self.draw_text('Welcome to Chess AI',40, WIDTH//2 , 40)
+        self.draw_text('Choose an Agent',30, WIDTH//2 , 150)
         self.draw_text('Created by Daniel Franco and Joao Malho',10, WIDTH//2, 750)
         
         # Draw agents with highlighting for the selected agent
         for i in range(len(self.agents)):
             if i == self.selected_agent:
-                self.draw_text(self.agents[i], 50, WIDTH//2, 250 + i * 100, selected=True)
+                self.draw_text(self.agents[i], 25, WIDTH//2, 250 + i * 100, selected=True)
             else:
-                self.draw_text(self.agents[i], 50, WIDTH//2, 250 + i * 100)
+                self.draw_text(self.agents[i], 25, WIDTH//2, 250 + i * 100)
         
         pygame.display.update()
 
