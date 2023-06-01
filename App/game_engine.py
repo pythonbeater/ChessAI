@@ -105,7 +105,9 @@ class Game:
         self.player_order = 'white' if self.player_order == 'black' else 'black'
         
     def set_hover(self, col, row):
-        self.hovered_square = self.board.squares[col][row]
+        try:
+            self.hovered_square = self.board.squares[col][row]
+        except: pass
         
     def restart(self):
         self.__init__()
