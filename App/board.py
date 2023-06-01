@@ -2,10 +2,11 @@
 Console board
 '''
 
+import time
 import copy
 from pieces import *
 from square import Square
-from move_piece import Place
+from move_piece import Place, Move
 from utils import B_DIMENSION
 from pieces import Pawn, Knight, Bishop, Rook, Queen, King
 
@@ -47,7 +48,9 @@ class Board:
             if self.castling(initial, final):
                 difference = final.col - initial.col
                 rook = piece.left_rook if (difference < 0) else piece.right_rook
-                self.move(rook, rook.valid_moves[-1])
+                if rook.valid_moves:
+                    self.move(rook, rook.valid_moves[-1])
+                
                 
         # Movement        
         piece.moved = True
@@ -288,7 +291,7 @@ class Board:
                     move_col = move_col + incr_col
         
         def king_moves():
-            valid_moves = [
+            adjs = [
                 (col+0,row-1), # up
                 (col+1,row-1), # up-right
                 (col+1,row+0), # right 
@@ -299,7 +302,7 @@ class Board:
                 (col-1,row-1) # up-left 
             ]
             
-            for move in valid_moves:
+            for move in adjs:
                 move_col, move_row = move
                 
                 if Square.in_board_range(move_col, move_row):
