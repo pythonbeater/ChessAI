@@ -231,7 +231,7 @@ class Board:
                             if not self.check(piece, move):
                                 # Append new move 
                                 piece.add_valid_moves(move)
-                            else: break # if the knight is in check
+                            else: break # if the knight is in check 
                         else:
                             # Append new move 
                             piece.add_valid_moves(move)
@@ -318,10 +318,7 @@ class Board:
                             if not self.check(piece, move):
                                 # Append new move 
                                 piece.add_valid_moves(move)
-                            else: 
-                                if not self.check(piece, move):
-                                    break
-                                else:piece.add_valid_moves(move)
+                            else: pass
                         else:
                             # Append new move 
                             piece.add_valid_moves(move)
