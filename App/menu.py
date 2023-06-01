@@ -1,3 +1,4 @@
+import os
 import pygame
 from utils import WIDTH, HEIGHT
 
@@ -6,18 +7,22 @@ class Menu:
     def __init__(self):
         # Initialize the game
         pygame.init()
-        
+
         # Create the game window
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Agent Selection')
         
         # Define Fonts
-        self.font = pygame.font.SysFont('arialblack', 40)
+        font_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Assets', 'Font', '8bit_wonder','8-BIT WONDER.TTF')
+        self.font_name = font_path
+        
+        # backgroung image
+        background_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'Assets', 'Images', 'Menu Background','back2.jpg')
+        self.background = pygame.image.load(background_path).convert()
         
         # Define colors
-        self.TEXT_COLOR = (255, 255, 255)
-        self.SELECTED_COLOR = (0, 255, 0)
-        
+        self.BLACK, self.WHITE, self.SELECTED = (0, 0, 0), (255, 255, 255), (134, 189, 62)
+                
         # Define agent options and initial selection
         self.agents = ['Agent 1', 'Agent 2', 'Agent 3']
         self.selected_agent = 0
@@ -25,26 +30,34 @@ class Menu:
         # Callback function for starting the game
         self.start_game_callback = None
 
-    def draw_text(self, text, x, y, selected=False):
+    
+    def draw_text(self, text, size, x, y, selected=False):
         if selected:
-            color = self.SELECTED_COLOR
+            font = pygame.font.Font(self.font_name, size)
+            text_surface = font.render(text, True, self.SELECTED)
+            text_rect = text_surface.get_rect()
+            text_rect.center = (x, y)
+            self.screen.blit(text_surface, text_rect)
         else:
-            color = self.TEXT_COLOR
-        img = self.font.render(text, True, color)
-        self.screen.blit(img, (x, y))
-        
+            font = pygame.font.Font(self.font_name, size)
+            text_surface = font.render(text, True, self.WHITE)
+            text_rect = text_surface.get_rect()
+            text_rect.center = (x, y)
+            self.screen.blit(text_surface, text_rect)
+    
     def draw_menu(self):
         # Background color
-        self.screen.fill((52, 78, 91))
+        self.screen.blit(self.background, (0, 0))
         
-        self.draw_text('Choose an Agent:', 100, 50)
+        self.draw_text('Choose an Agent',50, WIDTH//2 , 100)
+        self.draw_text('Created by Daniel Franco and Joao Malho',10, WIDTH//2, 750)
         
         # Draw agents with highlighting for the selected agent
         for i in range(len(self.agents)):
             if i == self.selected_agent:
-                self.draw_text(self.agents[i], 250, 150 + i * 100, selected=True)
+                self.draw_text(self.agents[i], 50, WIDTH//2, 250 + i * 100, selected=True)
             else:
-                self.draw_text(self.agents[i], 250, 150 + i * 100)
+                self.draw_text(self.agents[i], 50, WIDTH//2, 250 + i * 100)
         
         pygame.display.update()
 

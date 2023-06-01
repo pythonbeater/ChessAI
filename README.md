@@ -34,8 +34,8 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 
 
 ## To do!!
-1 - Castling 
 
-2 - Menu is implemented but has a bug, first round opens a window of menu withouhg interations if QUIT open a second rounf and works perfectly 
+1 - Menu correctly implemented, just making art now
+
 
 
