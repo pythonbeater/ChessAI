@@ -27,15 +27,19 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 
 * Press 'r' to restart the game
 
-* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to select him
+* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to selecT
 
 
 ## Game Images
 
 
-## To do!!
+## WIP
 
-1 - Menu correctly implemented, just making art now
+1 - Pawn Promotion
+2 - King Bug
+3 - RL Algorithms
+4 - Menu Art
+5 - Different Sounds
 
 
 
