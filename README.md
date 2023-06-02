@@ -27,7 +27,7 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 
 * Press 'r' to restart the game
 
-* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to selecT
+* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to select
 
 
 ## Game Images
