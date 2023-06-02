@@ -1,6 +1,8 @@
 # ChessAI
 
-* This project as the goal of create a playable Chess game against a trained RL agent that can play chess at a hight level of proficiency, capable of evaluation chess positions and making strategic decisions.
+* This project done in the scope of __Reinforcement Learning (RL)__ for the Data Science and Advanced Analytics in Nova IMS, Lisbon. The goal is to create RL agents that can play chess at a hight level of proficiency, being capable of chess positions evaluation and strategic decision making. We decided to go a little further and instead of using the `chess` module to incorporate these algorithms, we opted to design our own chess game.
+
+__IMPORTANT NOTE: THIS IS STILL A WORK IN PROCESS__
 
 ---
 ## Objectives
