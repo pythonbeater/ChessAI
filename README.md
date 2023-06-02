@@ -36,9 +36,13 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 ## WIP
 
 1 - Pawn Promotion
+
 2 - King Bug
+
 3 - RL Algorithms
+
 4 - Menu Art
+
 5 - Different Sounds
 
 
