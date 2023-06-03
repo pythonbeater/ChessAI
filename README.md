@@ -37,5 +37,6 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 
 1 - Menu correctly implemented, just making art now
 
-
+2 - Pawn promotions is implemented just finish choise in menu
+    Menu is also implemented
 

@@ -10,7 +10,8 @@ from menu import Menu
 from move_piece import Place
 from game_engine import Game
 from utils import WIDTH, HEIGHT, SQ_SIZE, MAX_FPS
-
+from pawn_promove_menu import PawnPromotionWindow
+from pieces import Pawn
 
 class App:
 
@@ -23,6 +24,7 @@ class App:
         self.config = Config()
         self.menu = None
         self.menu_active = False
+        self.promotion_window = None
 
     def mainloop(self):
         running = True
@@ -118,10 +120,25 @@ class App:
                         game.display_pieces(screen)
                         # next turn
                         game.next_turn()
+                        
+                    # Check if pawn promotion is needed
+                    if isinstance(move.piece, Pawn) and (released_row == 0 or released_row == 7):
+                        self.open_promotion_window()
                     
                 move.drop_move()
-
-            ######################
+                
+                
+                # Handle pawn promotion if the promotion window is active
+                if self.promotion_window:
+                    while True:
+                        if not self.promotion_window.handle_events():
+                            # Promotion option selected, update game state
+                            selected_option = self.promotion_window.selected_option
+                            if selected_option:
+                                self.promotion_window.handle_promotion(self.game, move.piece, released_col, released_row)
+                                self.promotion_window = None
+                            break
+                            ######################
 
             # moving window event: 
             elif event.type == pygame.ACTIVEEVENT:
@@ -144,6 +161,10 @@ class App:
 
         pygame.display.update() # screen update
         return True
+    
+    def open_promotion_window(self):
+        self.promotion_window = PawnPromotionWindow()
+        self.promotion_window.display()
     
     def start_menu(self):
         self.menu = Menu()

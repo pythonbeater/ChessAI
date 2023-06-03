@@ -6,9 +6,10 @@ import time
 import copy
 from pieces import *
 from square import Square
-from move_piece import Place, Move
+from move_piece import Place
 from utils import B_DIMENSION
 from pieces import Pawn, Knight, Bishop, Rook, Queen, King
+from pawn_promove_menu import PawnPromotionWindow
 
 class Board: 
 
@@ -19,6 +20,8 @@ class Board:
         self._create()
         self._add_pieces('white')
         self._add_pieces('black')
+        self.menu_pawn = None
+        self.menu_active_pawn = False
 
     def move(self, piece, move): 
         initial = move.initial
@@ -40,8 +43,9 @@ class Board:
                 self.squares[initial.col + difference][initial.row].piece = None
                 # final will hace 
                 self.squares[final.col][final.row].piece = piece
-
-        # Pawn promotion
+            
+            else:
+                self.check_promotion(final)
                         
         # castling
         if isinstance(piece, King):
@@ -63,6 +67,11 @@ class Board:
 
     def valid_move(self, piece, move):
         return move in piece.valid_moves
+
+    def check_promotion(self, final):
+        if final.row == 0 or final.row == 7:
+            self.menu_pawn = PawnPromotionWindow()
+            self.menu_active_pawn = True
 
     def castling(self, initial, final):
         return abs(initial.col - final.col) == 2
