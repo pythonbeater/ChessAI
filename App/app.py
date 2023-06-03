@@ -164,7 +164,7 @@ class App:
     
     def open_promotion_window(self):
         self.promotion_window = PawnPromotionWindow()
-        self.promotion_window.display()
+        self.promotion_window.draw_menu_pawn()
     
     def start_menu(self):
         self.menu = Menu()

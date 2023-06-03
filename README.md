@@ -1,7 +1,10 @@
 # ChessAI
 
-* This project as the goal of create a playable Chess game against a trained RL agent that can play chess at a hight level of proficiency, capable of evaluation chess positions and making strategic decisions.
+* This project done in the scope of __Reinforcement Learning (RL)__ for the Data Science and Advanced Analytics in Nova IMS, Lisbon. The goal is to create RL agents that can play chess at a hight level of proficiency, being capable of chess positions evaluation and strategic decision making. We decided to go a little further and instead of using the `chess` module to incorporate these algorithms, we opted to design our own chess game.
 
+__IMPORTANT NOTE: THIS IS STILL A WORK IN PROCESS__
+
+---
 ## Objectives
 
 * Optimize decision-making using RL algorithms: Explore different RL algorithms, as seen in class, to
@@ -13,6 +16,7 @@ challenging setting for the agent's training and evaluation.
 * Evaluate and benchmark performance: Assess the performance of the RL agent against different
 benchmarks from an existing chess engine (Stockfish). 
 
+---
 ## Extra Objectives:
 * Investigate transfer learning and generalization: Explore techniques for transfer learning to
 leverage knowledge acquired in related domains or from pre-training on large chess datasets.
@@ -21,22 +25,38 @@ Investigate the agent's ability to generalize its knowledge.
 process and provide insights into its strategic thinking. Investigate techniques to visualize the
 agent's evaluation of chess positions and understand its reasoning behind specific moves.
 
+---
 ## Configurations:
 
 * To run: app.py
 
 * Press 'r' to restart the game
 
-* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to select him
+* Press 'DOWN'/'UP' to choose the AI Agent then press 'ENTER' to select
 
 
 ## Game Images
 
+---
+## WIP
 
-## To do!!
-
-1 - Menu correctly implemented, just making art now
-
-2 - Pawn promotions is implemented just finish choise in menu
+1 - Pawn Promotion
+    
+Update:
+    Pawn promotions is implemented just finish choise in menu
     Menu is also implemented
 
+2 - King Bug
+
+3 - RL Algorithms
+
+4 - Menu Art
+
+5 - Different Sounds
+
+---
+## Contributors
+
+- [Daniel Franco](https://github.com/pythonbeater)
+
+- [João Malho](https://github.com/joaomalho)
