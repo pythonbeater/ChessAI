@@ -40,15 +40,20 @@ agent's evaluation of chess positions and understand its reasoning behind specif
 ---
 ## WIP
 
+WIP - Turn is implemented, although we always beggin with white turn, if time implement choose player color
+
 1 - Pawn Promotion
-    
 Update:
     Pawn promotions is implemented just finish choise in menu
     Menu is also implemented
 
 2 - King Bug
+Update:
+    King eat king only
 
 3 - RL Algorithms
+Update:
+    New file "ai_agents_models.py"
 
 4 - Menu Art
 

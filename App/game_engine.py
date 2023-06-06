@@ -100,7 +100,8 @@ class Game:
             rect = (self.hovered_square.col * SQ_SIZE, self.hovered_square.row * SQ_SIZE, SQ_SIZE, SQ_SIZE)
             # blit
             pygame.draw.rect(surface, color, rect, width= 3)
-                
+
+    # Player Turn                 
     def next_turn(self):
         self.player_order = 'white' if self.player_order == 'black' else 'black'
         

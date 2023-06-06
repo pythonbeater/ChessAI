@@ -60,37 +60,43 @@ class PawnPromotionWindow:
 
         pygame.display.update()
 
-    def handle_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    self.selected_promotion = (self.selected_promotion + 1) % len(self.promotions)
-                elif event.key == pygame.K_UP:
-                    self.selected_promotion = (self.selected_promotion - 1) % len(self.promotions)
-                elif event.key == pygame.K_RETURN:
-                    self.selected_option = self.promotions[self.selected_promotion]
-                    return False  # Exit the event loop and return the selected option
+        def handle_events(self):
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        self.selected_promotion = (self.selected_promotion + 1) % len(self.promotions)
+                    elif event.key == pygame.K_UP:
+                        self.selected_promotion = (self.selected_promotion - 1) % len(self.promotions)
+                    elif event.key == pygame.K_RETURN:
+                        self.selected_option = self.promotions[self.selected_promotion]
+                        return self.selected_option  # Return the selected option
+                elif event.type == pygame.QUIT:
+                    return None  # Return None to indicate quit event
+            return True  # Return True to continue running
 
-            elif event.type == pygame.QUIT:
-                return False
-        return True
+        def handle_promotion(self, piece):
+            # Ensure piece has the color attribute
+            if hasattr(piece, 'color'):
+                piece_color = piece.color
+            else:
+                # Handle the case when piece.color is missing
+                piece_color = "white"  # Provide a default color value
 
-    def handle_promotion(self, game, piece, target_col, target_row):
-        # Create the appropriate piece object based on the selected promotion
-        if self.selected_option == "Queen":
-            promoted_piece = Queen(piece.color)
-        elif self.selected_option == "Rook":
-            promoted_piece = Rook(piece.color)
-        elif self.selected_option == "Bishop":
-            promoted_piece = Bishop(piece.color)
-        elif self.selected_option == "Knight":
-            promoted_piece = Knight(piece.color)
+            # Create the appropriate piece object based on the selected promotion
+            if self.selected_option == "Queen":
+                promoted_piece = Queen(piece_color)
+            elif self.selected_option == "Rook":
+                promoted_piece = Rook(piece_color)
+            elif self.selected_option == "Bishop":
+                promoted_piece = Bishop(piece_color)
+            elif self.selected_option == "Knight":
+                promoted_piece = Knight(piece_color)
+            else:
+                # Handle the case when no option is selected
+                promoted_piece = None
 
-        # Update the game state with the promoted piece
-        self.squares[target_col][target_row].piece = promoted_piece
-
-        # Reset the selected option for future promotions
-        self.selected_option = None
+            # Return the promoted piece
+            return promoted_piece
     
     def run(self):
         running = True
