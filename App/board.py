@@ -45,7 +45,7 @@ class Board:
                 self.squares[final.col][final.row].piece = piece
             
             else:
-                self.check_promotion(final)
+                self.check_promotion(piece, final)
                         
         # castling
         if isinstance(piece, King):
@@ -68,10 +68,11 @@ class Board:
     def valid_move(self, piece, move):
         return move in piece.valid_moves
 
-    def check_promotion(self, final):
+    def check_promotion(self, piece, final):
         if final.row == 0 or final.row == 7:
-            self.menu_pawn = PawnPromotionWindow()
-            self.menu_active_pawn = True
+            self.squares[final.col][final.row].piece = Queen(piece.color)
+            #self.menu_pawn = PawnPromotionWindow()
+            #self.menu_active_pawn = True
 
     def castling(self, initial, final):
         return abs(initial.col - final.col) == 2

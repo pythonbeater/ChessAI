@@ -7,6 +7,8 @@ class RandomAgent:
         self.color = color
 
     def make_move(self, board):
+        valid_moves = []  # List to store all valid moves
+
         # Iterate over all the squares on the board
         for row in range(B_DIMENSION):
             for col in range(B_DIMENSION):
@@ -24,14 +26,16 @@ class RandomAgent:
                         possible_moves = piece.valid_moves
 
                         if possible_moves:
-                            # Select a random move from the list of possible moves
-                            random_move = random.choice(possible_moves)
+                            valid_moves.extend([(piece, move) for move in possible_moves])  # Append valid moves to the list
 
-                            # Make the selected move on the board
-                            place = Place(random_move.initial, random_move.final)
-                            board.move(piece, place)
+                            if valid_moves:
+                                # Select a random move from the list of valid moves
+                                piece, random_move = random.choice(valid_moves)
 
-                            return
+                                # Make the selected move on the board
+                                place = Place(random_move.initial, random_move.final)
+                                board.move(piece, place)
 
-        # No possible moves for the agent, so it can't make a move
-        print("No possible moves for the agent.")
+                            else:
+                                # No possible moves for the agent, so it can't make a move
+                                print("No possible moves for the agent.")

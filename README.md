@@ -46,6 +46,7 @@ WIP - Turn is implemented, although we always beggin with white turn, if time im
 Update:
     Pawn promotions is implemented just finish choise in menu
     Menu is also implemented
+    It is by default Queen
 
 2 - King Bug
 Update:
@@ -53,12 +54,16 @@ Update:
 
 3 - RL Algorithms
 Update:
-    New file "ai_agents_models.py"
+    New file "ai_agents_models.py" is already working
+
 
 4 - Menu Art
+Update:
+    Missing the agent selection retrieve the agent selected
 
 5 - Different Sounds
 
+6 - Checkmate end game
 ---
 ## Contributors
 

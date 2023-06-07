@@ -11,8 +11,9 @@ from move_piece import Place
 from game_engine import Game
 from utils import WIDTH, HEIGHT, SQ_SIZE, MAX_FPS
 from pawn_promove_menu import PawnPromotionWindow
-from pieces import Pawn
-from ai_agents_models import FindRandomMove
+from pieces import Pawn, Queen
+#from ai_agents_models import RandomAgent
+from ai_1 import RandomAgent
 
 class App:
 
@@ -26,24 +27,25 @@ class App:
         self.menu = None
         self.menu_active = False
         self.promotion_window = None
+        ai_player = RandomAgent("black")
         
-    def mainloop(self):
+    def mainloop(self, selected_agent):
         running = True
         while running:
             # Run Menu
             if self.menu_active:
                 running = self.menu.run()
             else:
-                running = self.run_game()
+                running = self.run_game(selected_agent)
             
-    def run_game(self):
+    def run_game(self, selected_agent):
         
         screen = self.screen
         clock = self.clock
         game = self.game
         board = self.game.board
         move = self.game.move
-        
+        random_agent = RandomAgent('black')
         
         game.display_bg(screen) # always display background
         game.display_last_move(screen)
@@ -116,7 +118,7 @@ class App:
                         initial = Square(move.initial_col, move.initial_row)
                         final = Square(released_col, released_row)
                         place = Place(initial, final)
-
+                        
                         if board.valid_move(move.piece, place):
                             captured = board.squares[released_col][released_row].square_state(check_type='piece')
                             board.move(move.piece, place)
@@ -128,23 +130,24 @@ class App:
                             game.next_turn()
                             
                         # Check if pawn promotion is needed
-                        if isinstance(move.piece, Pawn) and (released_row == 0 or released_row == 7):
-                            self.open_promotion_window()
+                        # if isinstance(move.piece, Pawn) and (released_row == 0 or released_row == 7):
+                            #self.squares[final.row][final.col].piece = Queen('white')
+
                         
                     move.drop_move()
                     
                     
-                    # Handle pawn promotion if the promotion window is active
-                    if self.promotion_window:
-                        while True:
-                            if not self.promotion_window.handle_events():
-                                # Promotion option selected, update game state
-                                selected_option = self.promotion_window.selected_option
-                                if selected_option:
-                                    self.promotion_window.handle_promotion(self.game, move.piece, released_col, released_row)
-                                    self.promotion_window = None
-                                break
-                                ######################
+                    # # Handle pawn promotion if the promotion window is active
+                    # if self.promotion_window:
+                    #     while True:
+                    #         if not self.promotion_window.handle_events():
+                    #             # Promotion option selected, update game state
+                    #             selected_option = self.promotion_window.selected_option
+                    #             if selected_option:
+                    #                 self.promotion_window.handle_promotion(self.game, move.piece, released_col, released_row)
+                    #                 self.promotion_window = None
+                    #             break
+                    #             ######################
 
                 # moving window event: 
                 elif event.type == pygame.ACTIVEEVENT:
@@ -166,17 +169,22 @@ class App:
                     sys.exit()
                 
             # Agent implementation
-            elif game.player_order == 'black': ## Human player!!! 
-                #FindRandomMove(board.valid_move)
-                print('agent AI turn')
+            elif game.player_order == 'black':
+                if selected_agent == 'Random Ai Agent':
+                    random_agent.make_move(board)
+                if selected_agent != 'Random Ai Agent':
+                    print('agent not implemented yet') 
+                
                 game.next_turn()  
-    
+        
         pygame.display.update() # screen update
         return True
+
+    ### To keep developing
     
-    def open_promotion_window(self):
-        self.promotion_window = PawnPromotionWindow()
-        self.promotion_window.draw_menu_pawn()
+#    def open_promotion_window(self):
+#        self.promotion_window = PawnPromotionWindow()
+#        self.promotion_window.draw_menu_pawn()
     
     def start_menu(self):
         self.menu = Menu()
@@ -186,8 +194,9 @@ class App:
     def start_game(self, selected_agent):
         self.menu_active = False
         print('Selected Agent:', selected_agent)
-        self.mainloop()
+        self.mainloop(selected_agent)
 
 app = App()
 app.start_menu()
-app.mainloop()
+selected_agent = 'Random Ai Agent'
+app.mainloop(selected_agent)
