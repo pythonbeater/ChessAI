@@ -56,6 +56,7 @@ Update:
 Update:
     New file "ai_agents_models.py" is already working
 
+    New agent in constrution that acts over the best movement possible
 
 4 - Menu Art
 Update:
@@ -64,6 +65,8 @@ Update:
 5 - Different Sounds
 
 6 - Checkmate end game
+    Implemented only art missing
+
 ---
 ## Contributors
 

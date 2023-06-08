@@ -10,10 +10,9 @@ from menu import Menu
 from move_piece import Place
 from game_engine import Game
 from utils import WIDTH, HEIGHT, SQ_SIZE, MAX_FPS
-from pawn_promove_menu import PawnPromotionWindow
-from pieces import Pawn, Queen
 #from ai_agents_models import RandomAgent
-from ai_1 import RandomAgent
+from ai_agents_models import RandomAgent, BestMovementAgent
+from checkmate import Checkmate
 
 class App:
 
@@ -27,7 +26,7 @@ class App:
         self.menu = None
         self.menu_active = False
         self.promotion_window = None
-        ai_player = RandomAgent("black")
+        self.checkmate = Checkmate(self.screen)
         
     def mainloop(self, selected_agent):
         running = True
@@ -46,6 +45,8 @@ class App:
         board = self.game.board
         move = self.game.move
         random_agent = RandomAgent('black')
+        best_mov_agent = BestMovementAgent('black')
+        
         
         game.display_bg(screen) # always display background
         game.display_last_move(screen)
@@ -129,10 +130,6 @@ class App:
                             # next turn
                             game.next_turn()
                             
-                        # Check if pawn promotion is needed
-                        # if isinstance(move.piece, Pawn) and (released_row == 0 or released_row == 7):
-                            #self.squares[final.row][final.col].piece = Queen('white')
-
                         
                     move.drop_move()
                     
@@ -172,11 +169,20 @@ class App:
             elif game.player_order == 'black':
                 if selected_agent == 'Random Ai Agent':
                     random_agent.make_move(board)
-                if selected_agent != 'Random Ai Agent':
+                
+                elif selected_agent == 'Best Movement Agent':
+                    best_mov_agent.make_move(board)
+                
+                else:
                     print('agent not implemented yet') 
                 
                 game.next_turn()  
-        
+
+            # Checkmate check
+            elif self.checkmate.checkmate(board):
+                self.checkmate.display_checkmate_message()
+                            
+            
         pygame.display.update() # screen update
         return True
 

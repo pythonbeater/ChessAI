@@ -32,7 +32,6 @@ class Pieces:
 ######### CHILD CLASSES #########
 
 class Pawn(Pieces): 
-
     def __init__(self, color) -> None:
         super().__init__('pawn', color, 1.)
         # if its color is white it means it'll move upwards
@@ -41,27 +40,22 @@ class Pawn(Pieces):
         self.en_passant = False
         
 class Knight(Pieces): 
-
     def __init__(self, color) -> None:
-        super().__init__('knight', color, 3.)
-
+        super().__init__('knight', color, 3)
+        
 class Bishop(Pieces): 
-
     def __init__(self, color) -> None:
         super().__init__('bishop', color, 3.001)
 
 class Rook(Pieces): 
-
     def __init__(self, color) -> None:
         super().__init__('rook ', color, 5.)
 
 class Queen(Pieces): 
-
     def __init__(self, color) -> None:
-        super().__init__('queen', color, 9.)
+        super().__init__('queen', color, 10.)
 
 class King(Pieces):
-
     def __init__(self, color) -> None:
         self.left_rook = None
         self.right_rook = None

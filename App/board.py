@@ -2,14 +2,14 @@
 Console board
 '''
 
-import time
 import copy
 from pieces import *
 from square import Square
 from move_piece import Place
 from utils import B_DIMENSION
 from pieces import Pawn, Knight, Bishop, Rook, Queen, King
-from pawn_promove_menu import PawnPromotionWindow
+# from pawn_promove_menu import PawnPromotionWindow
+from utils import WIDTH, HEIGHT
 
 class Board: 
 
@@ -108,6 +108,11 @@ class Board:
                             return True
         
         return False
+    
+    
+    ## checkmate 
+# if king check 
+# if king no valid moves
 
     def check_moves(self, piece, col, row, Confirmation=True): 
         '''

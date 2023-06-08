@@ -24,7 +24,7 @@ class Menu:
         self.BLACK, self.WHITE, self.SELECTED = (0, 0, 0), (255, 255, 255), (134, 189, 62)
                 
         # Define agent options and initial selection
-        self.agents = ['Random Ai Agent', 'Agent 2', 'Agent 3']
+        self.agents = ['Random Ai Agent', 'Best Movement Agent', 'Agent 3']
         self.selected_agent = 0
 
         # Callback function for starting the game
